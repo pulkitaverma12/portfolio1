@@ -1,5 +1,4 @@
 import React from 'react';
-import { LoadingOverlay } from './components/ui/loading-overlay';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
@@ -13,22 +12,20 @@ import './App.css';
 
 function App() {
   return (
-    <LoadingOverlay>
-      <div className="app-container">
-        <div className="noise-overlay"></div>
-        <Navbar />
-        <main>
-          <Hero />
-          <About />
-          <Projects />
-          <Skills />
-          <ResumeSection />
-          <Experience />
-          <Contact />
-        </main>
-        <Footer />
-      </div>
-    </LoadingOverlay>
+    <div className="app-container">
+      <div className="noise-overlay"></div>
+      <Navbar />
+      <main>
+        <Hero />
+        <About />
+        <Projects />
+        <Skills />
+        <ResumeSection />
+        <Experience />
+        <Contact />
+      </main>
+      <Footer />
+    </div>
   );
 }
 

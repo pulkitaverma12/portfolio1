@@ -38,12 +38,39 @@
 
 /* Glitch Effect */
 .hero-name {
-  font-size: clamp(4rem, 8vw, 6rem);
+  font-size: clamp(2.6rem, 8vw, 6rem);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 20px;
   position: relative;
   color: var(--text-primary);
+  display: inline-block;
+  width: max-content;
+  white-space: nowrap;
+  transition: color 0.35s ease, text-shadow 0.35s ease, transform 0.35s ease;
+}
+
+/* Premium shine effect that runs across the name on hover. */
+.hero-name::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  transform: translateX(-145%);
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.hero-name:hover {
+  color: #f5f5f5;
+  transform: translateY(-2px);
+  text-shadow: 0 0 12px rgba(229, 229, 229, 0.42), 0 0 30px rgba(229, 229, 229, 0.2);
+}
+
+.hero-name:hover::after {
+  transform: translateX(145%);
 }
 
 .glitch {
@@ -156,20 +183,83 @@
   align-items: center;
 }
 
-.profile-img {
+.profile-img-shell {
+  position: relative;
   width: calc(100% - 30px);
   height: calc(100% - 30px);
   border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid rgba(229, 229, 229, 0.3);
+  box-shadow: inset 0 0 0 1px rgba(229, 229, 229, 0.12);
+}
+
+.profile-clip-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
   object-fit: cover;
   filter: contrast(108%);
-  border: 2px solid #E5E5E5;
+  border: 2px solid rgba(229, 229, 229, 0.88);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38), 0 0 14px rgba(229, 229, 229, 0.14);
+  transform: scale(0.95);
+  animation: profileScaleIn 1.8s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Optional border/glow that strengthens as reveal progresses. */
+.profile-img-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.2px solid rgba(229, 229, 229, 0.28);
+  box-shadow: 0 0 0 rgba(229, 229, 229, 0.08);
+  opacity: 0;
+  pointer-events: none;
+  animation: profileGlowIn 1.8s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
 }
 
 .profile-container:hover .profile-img {
   transform: scale(1.03);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.42), 0 0 18px rgba(229, 229, 229, 0.2);
+}
+
+@keyframes profileScaleIn {
+  0% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes profileGlowIn {
+  0% {
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(229, 229, 229, 0.08);
+  }
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(229, 229, 229, 0.22);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-img,
+  .profile-img-shell::after {
+    animation: none;
+  }
+
+  .profile-img {
+    transform: scale(1);
+  }
 }
 
 @media (max-width: 992px) {
@@ -181,6 +271,10 @@
   
   .hero-content {
     align-items: center;
+  }
+
+  .hero-name {
+    font-size: clamp(2.1rem, 11vw, 4rem);
   }
 
   .hero-background {
