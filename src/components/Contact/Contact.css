@@ -1,5 +1,5 @@
 .contact-section {
-  padding: 100px 50px;
+  padding: clamp(78px, 10vw, 100px) clamp(18px, 4vw, 50px);
   background: var(--bg-color);
   position: relative;
 }
@@ -13,19 +13,19 @@
 .contact-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  gap: clamp(26px, 5vw, 80px);
   align-items: center;
 }
 
 .contact-left .section-title {
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 5.5vw, 3.5rem);
   margin-bottom: 20px;
 }
 
 .contact-heading {
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 2.6vw, 1.5rem);
   color: var(--text-secondary);
-  margin-bottom: 50px;
+  margin-bottom: clamp(24px, 5vw, 50px);
   line-height: 1.4;
 }
 
@@ -39,6 +39,8 @@
   border-radius: 30px;
   margin-bottom: 40px;
   transition: all 0.3s ease;
+  max-width: 100%;
+  flex-wrap: wrap;
 }
 
 .email-copy:hover {
@@ -51,9 +53,10 @@
 }
 
 .email-text {
-  font-size: 1.1rem;
+  font-size: clamp(0.92rem, 2.3vw, 1.1rem);
   font-weight: 500;
   color: var(--text-primary);
+  overflow-wrap: anywhere;
 }
 
 .copy-hint {
@@ -70,6 +73,7 @@
 .social-links {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .social-link {
@@ -94,7 +98,7 @@
 /* Form Styles */
 .contact-form {
   background: rgba(229, 229, 229, 0.02);
-  padding: 40px;
+  padding: clamp(18px, 4vw, 40px);
   border-radius: 20px;
   border: 1px solid rgba(229, 229, 229, 0.05);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
@@ -215,13 +219,46 @@
     grid-template-columns: 1fr;
     gap: 50px;
   }
+
+  .contact-left {
+    text-align: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .form-row {
     grid-template-columns: 1fr;
   }
+
+  .toast-notification {
+    right: 12px;
+    left: 12px;
+    bottom: 16px;
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 576px) {
   .contact-section {
-    padding: 80px 25px;
+    padding-top: 74px;
+    padding-bottom: 74px;
+  }
+
+  .email-copy {
+    padding: 12px 14px;
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  .contact-form {
+    border-radius: 14px;
+  }
+
+  .input-group {
+    margin-bottom: 22px;
   }
 }

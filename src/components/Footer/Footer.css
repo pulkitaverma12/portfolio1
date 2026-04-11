@@ -12,7 +12,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
+  padding: 0 clamp(18px, 4vw, 50px);
+  gap: 14px;
 }
 
 .copyright {
@@ -84,15 +85,19 @@
 }
 
 @media (max-width: 768px) {
+  .footer-section {
+    padding: 28px 0;
+  }
+
   .footer-container {
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     text-align: center;
   }
 
   .footer-links-wrap {
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
   }
 
   .footer-resume-links {

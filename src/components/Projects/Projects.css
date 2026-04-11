@@ -1,5 +1,5 @@
 .projects-section {
-  padding: 100px 50px;
+  padding: clamp(78px, 10vw, 100px) clamp(18px, 4vw, 50px);
   min-height: 100vh;
   position: relative;
   background: var(--bg-color);
@@ -12,14 +12,14 @@
 }
 
 .section-header {
-  margin-bottom: 80px;
+  margin-bottom: clamp(34px, 6.5vw, 80px);
   text-align: center;
   position: relative;
 }
 
 .projects-title {
   font-family: var(--font-display);
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 6vw, 3.5rem);
   color: var(--text-primary);
   display: inline-block;
   position: relative;
@@ -30,7 +30,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 8rem;
+  font-size: clamp(3rem, 12vw, 8rem);
   font-weight: 800;
   color: rgba(229, 229, 229, 0.03);
   z-index: -1;
@@ -41,8 +41,8 @@
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: clamp(16px, 3vw, 40px);
 }
 
 @media (max-width: 1200px) {
@@ -53,15 +53,19 @@
 
 @media (max-width: 768px) {
   .projects-section {
-    padding: 80px 20px;
+    padding-top: 74px;
+    padding-bottom: 74px;
   }
+
+  .title-bg {
+    font-size: clamp(2.6rem, 16vw, 4rem);
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
   }
-  .title-bg {
-    font-size: 4rem;
-  }
+
   .projects-title {
-    font-size: 2.5rem;
+    font-size: clamp(1.85rem, 8.5vw, 2.5rem);
   }
 }

@@ -7,6 +7,7 @@ import './Hero.css';
 
 const PROFILE_SWEEP_DURATION = 1800;
 const PROFILE_SWEEP_SIZE = 360;
+const PROFILE_REVEAL_BREAKPOINT = 768;
 
 // Cubic-bezier solver for a slow-start, fast-finish reveal timing.
 function createCubicBezierEasing(x1, y1, x2, y2) {
@@ -125,6 +126,8 @@ const ThreeDElement = () => {
 const Hero = () => {
   const clipId = useId().replace(/:/g, '-');
   const [profileProgress, setProfileProgress] = useState(0);
+  const [isCompactScreen, setIsCompactScreen] = useState(false);
+  const [isRevealComplete, setIsRevealComplete] = useState(false);
 
   const roles = [
     "Full Stack Developer",
@@ -137,8 +140,30 @@ const Hero = () => {
   const sweepCenter = PROFILE_SWEEP_SIZE / 2;
   const sweepRadius = sweepCenter;
   const sweepAngle = profileProgress * 360;
+  const shouldUseClipReveal = !isCompactScreen && !isRevealComplete;
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(`(max-width: ${PROFILE_REVEAL_BREAKPOINT}px)`);
+    const syncViewport = () => {
+      setIsCompactScreen(mediaQuery.matches);
+    };
+
+    syncViewport();
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', syncViewport);
+      return () => mediaQuery.removeEventListener('change', syncViewport);
+    }
+
+    mediaQuery.addListener(syncViewport);
+    return () => mediaQuery.removeListener(syncViewport);
+  }, []);
 
   const sweepPath = useMemo(() => {
+    if (!shouldUseClipReveal) {
+      return null;
+    }
+
     if (sweepAngle <= 0.0001) {
       return '';
     }
@@ -155,10 +180,21 @@ const Hero = () => {
     const largeArcFlag = sweepAngle > 180 ? 1 : 0;
 
     return `M ${sweepCenter} ${sweepCenter} L ${startX} ${startY} A ${sweepRadius} ${sweepRadius} 0 ${largeArcFlag} 1 ${endX} ${endY} Z`;
-  }, [sweepAngle, sweepCenter, sweepRadius]);
+  }, [shouldUseClipReveal, sweepAngle, sweepCenter, sweepRadius]);
 
   useEffect(() => {
     let rafId;
+    let completionTimeout;
+
+    if (isCompactScreen) {
+      setProfileProgress(1);
+      setIsRevealComplete(true);
+      return undefined;
+    }
+
+    setIsRevealComplete(false);
+    setProfileProgress(0);
+
     const start = performance.now();
 
     const tick = (now) => {
@@ -167,15 +203,22 @@ const Hero = () => {
 
       if (linear < 1) {
         rafId = requestAnimationFrame(tick);
+      } else {
+        setIsRevealComplete(true);
       }
     };
 
     rafId = requestAnimationFrame(tick);
+    completionTimeout = window.setTimeout(() => {
+      setProfileProgress(1);
+      setIsRevealComplete(true);
+    }, PROFILE_SWEEP_DURATION + 320);
 
     return () => {
       cancelAnimationFrame(rafId);
+      window.clearTimeout(completionTimeout);
     };
-  }, [sweepEase]);
+  }, [isCompactScreen, sweepEase]);
 
   return (
     <section id="home" className="hero-section">
@@ -223,31 +266,32 @@ const Hero = () => {
           
           <div className="profile-container hover-target">
             <div className="profile-img-shell">
-              {/* SVG clipPath creates a precise clock-style clockwise reveal sector. */}
-              <svg
-                viewBox={`0 0 ${PROFILE_SWEEP_SIZE} ${PROFILE_SWEEP_SIZE}`}
-                className="profile-clip-defs"
-                aria-hidden="true"
-              >
-                <defs>
-                  <clipPath id={clipId} clipPathUnits="userSpaceOnUse">
-                    {sweepPath === null ? (
-                      <circle cx={sweepCenter} cy={sweepCenter} r={sweepRadius} />
-                    ) : (
-                      sweepPath && <path d={sweepPath} />
-                    )}
-                  </clipPath>
-                </defs>
-              </svg>
+              {shouldUseClipReveal && (
+                <svg
+                  viewBox={`0 0 ${PROFILE_SWEEP_SIZE} ${PROFILE_SWEEP_SIZE}`}
+                  className="profile-clip-defs"
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <clipPath id={clipId} clipPathUnits="userSpaceOnUse">
+                      {sweepPath && <path d={sweepPath} />}
+                    </clipPath>
+                  </defs>
+                </svg>
+              )}
 
               <img
                 src={meImage}
                 alt="Pulkita Verma"
                 className="profile-img"
-                style={{
-                  clipPath: `url(#${clipId})`,
-                  WebkitClipPath: `url(#${clipId})`
-                }}
+                style={
+                  shouldUseClipReveal
+                    ? {
+                        clipPath: `url(#${clipId})`,
+                        WebkitClipPath: `url(#${clipId})`
+                      }
+                    : undefined
+                }
               />
             </div>
           </div>

@@ -1,5 +1,5 @@
 .about-section {
-  padding: 100px 50px;
+  padding: clamp(78px, 10vw, 100px) clamp(18px, 4vw, 50px);
   min-height: 80vh;
   display: flex;
   justify-content: center;
@@ -13,23 +13,23 @@
 
 .about-header {
   position: relative;
-  margin-bottom: 50px;
+  margin-bottom: clamp(28px, 5vw, 50px);
 }
 
 .section-number {
   font-family: var(--font-display);
-  font-size: 15rem;
+  font-size: clamp(6rem, 14vw, 15rem);
   font-weight: 800;
   position: absolute;
-  top: -120px;
-  left: -20px;
+  top: clamp(-92px, -8vw, -120px);
+  left: clamp(-8px, -1vw, -20px);
   color: var(--text-secondary);
   z-index: 0;
   line-height: 1;
 }
 
 .section-title {
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 6vw, 3.5rem);
   position: relative;
   z-index: 1;
   color: var(--text-primary);
@@ -38,17 +38,17 @@
 .about-content {
   display: grid;
   grid-template-columns: 3fr 2fr;
-  gap: 80px;
+  gap: clamp(28px, 5.5vw, 80px);
   align-items: center;
   position: relative;
   z-index: 1;
 }
 
 .about-text {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   line-height: 1.8;
   color: var(--text-secondary);
-  margin-bottom: 50px;
+  margin-bottom: clamp(26px, 5vw, 50px);
 }
 
 .highlight {
@@ -65,7 +65,7 @@
 .stat-card {
   background: rgba(229, 229, 229, 0.03);
   border: 1px solid rgba(229, 229, 229, 0.05);
-  padding: 30px;
+  padding: clamp(18px, 2.8vw, 30px);
   border-radius: 20px;
   backdrop-filter: blur(10px);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -79,7 +79,7 @@
 
 .stat-value {
   font-family: var(--font-display);
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 6vw, 3.5rem);
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 5px;
@@ -98,7 +98,7 @@
 }
 
 .about-visual {
-  height: 400px;
+  height: clamp(280px, 36vw, 430px);
   width: 100%;
   margin-top: 20px;
   border-radius: 20px;
@@ -110,6 +110,7 @@
 .about-robot-spline {
   width: 100%;
   height: 100%;
+  min-height: inherit;
 }
 
 @media (max-width: 992px) {
@@ -117,17 +118,40 @@
     grid-template-columns: 1fr;
     gap: 50px;
   }
+
   .section-number {
-    font-size: 10rem;
-    top: -80px;
+    font-size: clamp(5rem, 20vw, 10rem);
+    top: -56px;
+    left: 0;
   }
+
+  .about-text {
+    line-height: 1.75;
+  }
+
   .about-visual {
-    height: 300px;
+    height: clamp(260px, 56vw, 360px);
+    margin-top: 0;
   }
 }
 
 @media (max-width: 576px) {
+  .about-section {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
   .stats-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .section-number {
+    display: none;
+  }
+
+  .about-visual {
+    height: clamp(240px, 72vw, 320px);
+    border-radius: 16px;
   }
 }

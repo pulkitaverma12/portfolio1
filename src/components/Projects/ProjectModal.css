@@ -10,15 +10,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: clamp(10px, 3.5vw, 40px);
 }
 
 .modal-content {
   background: #000000;
   width: 100%;
   max-width: 1200px;
-  max-height: 90vh;
-  border-radius: 20px;
+  max-height: min(92vh, 900px);
+  border-radius: clamp(14px, 2.8vw, 20px);
   position: relative;
   overflow-y: auto;
   border: 1px solid rgba(229, 229, 229, 0.1);
@@ -53,13 +53,13 @@
 
 .modal-gallery {
   width: 100%;
-  padding: 30px;
+  padding: clamp(16px, 3vw, 30px);
   background: linear-gradient(to bottom, #000000, #0A0A0A);
 }
 
 .main-img {
   width: 100%;
-  height: 450px;
+  height: clamp(210px, 42vw, 450px);
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 20px;
@@ -74,11 +74,11 @@
 }
 
 .thumbnail {
-  width: 120px;
-  height: 80px;
+  width: clamp(84px, 18vw, 120px);
+  height: clamp(62px, 12vw, 80px);
   object-fit: cover;
   border-radius: 8px;
-  cursor: none;
+  cursor: pointer;
   opacity: 0.5;
   transition: all 0.3s ease;
   border: 2px solid transparent;
@@ -90,12 +90,12 @@
 }
 
 .modal-details {
-  padding: 40px;
+  padding: clamp(18px, 4vw, 40px);
 }
 
 .modal-title {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: clamp(1.6rem, 4.5vw, 2.5rem);
   color: var(--text-primary);
   margin-bottom: 20px;
 }
@@ -108,7 +108,7 @@
 }
 
 .modal-long-desc {
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
   line-height: 1.8;
   color: var(--text-secondary);
   margin-bottom: 40px;
@@ -117,6 +117,7 @@
 .modal-actions {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .action-btn {
@@ -127,6 +128,7 @@
   border-radius: 30px;
   font-weight: 600;
   transition: all 0.3s ease;
+  justify-content: center;
 }
 
 .action-btn.primary {
@@ -155,10 +157,37 @@
   .modal-backdrop {
     padding: 10px;
   }
+
   .main-img {
-    height: 250px;
+    height: clamp(190px, 48vw, 250px);
   }
+
   .modal-title {
-    font-size: 2rem;
+    font-size: clamp(1.45rem, 7vw, 2rem);
+  }
+
+  .modal-actions {
+    gap: 12px;
+  }
+
+  .action-btn {
+    padding: 11px 18px;
+  }
+}
+
+@media (max-width: 576px) {
+  .close-btn {
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
   }
 }

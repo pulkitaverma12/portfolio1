@@ -159,6 +159,11 @@
   min-height: 170px;
 }
 
+.activity-graph-scroll {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 .activity-heatmap-image {
   display: block;
   width: 100%;
@@ -258,4 +263,33 @@
     padding: 8px;
   }
 
+  .activity-graph-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .activity-heatmap-image,
+  .activity-heatmap-fallback {
+    width: max(100%, 640px);
+    max-width: none;
+  }
+
+}
+
+@media (max-width: 576px) {
+  .activity-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .activity-header-row a {
+    font-size: 0.82rem;
+  }
+
+  .activity-heatmap-image,
+  .activity-heatmap-fallback {
+    width: max(100%, 560px);
+  }
 }

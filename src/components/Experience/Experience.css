@@ -1,5 +1,5 @@
 .experience-section {
-  padding: 100px 50px;
+  padding: clamp(78px, 10vw, 100px) clamp(18px, 4vw, 50px);
   background: var(--bg-color);
   position: relative;
 }
@@ -12,7 +12,7 @@
 
 .text-center {
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: clamp(34px, 6vw, 80px);
 }
 
 .timeline {
@@ -34,7 +34,7 @@
 }
 
 .timeline-item {
-  padding: 10px 40px;
+  padding: 10px clamp(20px, 3vw, 40px);
   position: relative;
   background-color: inherit;
   width: 50%;
@@ -67,7 +67,7 @@
 }
 
 .timeline-content {
-  padding: 30px;
+  padding: clamp(18px, 2.8vw, 30px);
   background: rgba(229, 229, 229, 0.03);
   border: 1px solid rgba(229, 229, 229, 0.05);
   position: relative;
@@ -90,7 +90,7 @@
 }
 
 .timeline-role {
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
   color: var(--text-primary);
   margin-bottom: 5px;
 }
@@ -119,16 +119,19 @@
 
 @media screen and (max-width: 768px) {
   .experience-section {
-    padding: 80px 25px;
+    padding-top: 74px;
+    padding-bottom: 74px;
   }
+
   .timeline::after {
-    left: 31px;
+    left: 20px;
   }
   
   .timeline-item {
     width: 100%;
-    padding-left: 70px;
+    padding-left: 54px;
     padding-right: 0;
+    margin-bottom: 26px;
   }
   
   .timeline-item.right {
@@ -137,6 +140,22 @@
   
   .timeline-item.left .timeline-node,
   .timeline-item.right .timeline-node {
-    left: 21px;
+    left: 10px;
+    top: 22px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .timeline-item {
+    padding-left: 48px;
+  }
+
+  .timeline-company {
+    font-size: 1rem;
+  }
+
+  .timeline-achievements {
+    padding-left: 16px;
+    line-height: 1.55;
   }
 }

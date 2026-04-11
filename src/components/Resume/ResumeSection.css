@@ -1,5 +1,5 @@
 .resume-section {
-  padding: 90px 50px 30px;
+  padding: clamp(72px, 9vw, 90px) clamp(18px, 4vw, 50px) clamp(20px, 4vw, 30px);
   background: #0A0A0A;
 }
 
@@ -110,7 +110,7 @@
 
 @media (max-width: 768px) {
   .resume-section {
-    padding: 75px 24px 20px;
+    padding-top: 74px;
   }
 
   .resume-card-content {
@@ -120,5 +120,16 @@
 
   .resume-actions {
     justify-content: flex-start;
+  }
+}
+
+@media (max-width: 576px) {
+  .resume-actions {
+    width: 100%;
+  }
+
+  .resume-btn {
+    width: 100%;
+    text-align: center;
   }
 }
