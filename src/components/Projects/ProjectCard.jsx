@@ -1,74 +1,81 @@
-import React, { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import './ProjectCard.css';
 
 const ProjectCard = ({ project, onClick }) => {
-  const ref = useRef(null);
-  
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  const [isFlipped, setIsFlipped] = useState(false);
 
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
-
-  const handleMouseMove = (e) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    
-    x.set(xPct);
-    y.set(yPct);
+  const toggleCard = () => {
+    setIsFlipped((prev) => !prev);
   };
 
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
+  const resetCard = () => {
+    setIsFlipped(false);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.target instanceof HTMLElement && e.target.closest('.view-btn')) {
+      return;
+    }
+
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleCard();
+    }
+  };
+
+  const handleViewProject = (e) => {
+    e.stopPropagation();
+    onClick(project);
   };
 
   return (
-    <motion.div
-      ref={ref}
-      className="project-card hover-target"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
+    <motion.article
+      className={`project-card hover-target ${isFlipped ? 'is-flipped' : ''}`}
+      onMouseLeave={resetCard}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      onClick={() => onClick(project)}
+      onClick={toggleCard}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label={`${project.title} card. Flip to see details.`}
     >
-      <div className="card-content" style={{ transform: "translateZ(30px)" }}>
-        <div className="card-image-wrapper">
-          <img src={project.image} alt={project.title} className="card-image" />
-          <div className="card-overlay">
-            <button className="view-btn">View Project</button>
+      <div className="card-flip-inner">
+        <div className="card-face card-front">
+          <div className="card-image-wrapper">
+            <img src={project.image} alt={project.title} className="card-image" />
+            <div className="card-overlay">
+              <span className="flip-hint">Hover or tap to flip</span>
+            </div>
+          </div>
+          <div className="card-info card-info-front">
+            <h3 className="card-title">{project.title}</h3>
+            <p className="card-desc">{project.description}</p>
           </div>
         </div>
-        <div className="card-info">
-          <h3 className="card-title">{project.title}</h3>
-          <p className="card-desc">{project.description}</p>
+
+        <div className="card-face card-back">
+          <div className="card-back-top">
+            <p className="card-back-label">Project Snapshot</p>
+            <h3 className="card-title">{project.title}</h3>
+            <p className="card-desc">{project.description}</p>
+          </div>
+
           <div className="card-tags">
             {project.tags.map((tag, idx) => (
               <span key={idx} className="tag">{tag}</span>
             ))}
           </div>
+
+          <button type="button" className="view-btn" onClick={handleViewProject}>
+            View Project
+          </button>
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   );
 };
 

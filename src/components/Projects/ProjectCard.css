@@ -1,27 +1,77 @@
 .project-card {
-  perspective: 1000px;
+  perspective: 1200px;
   cursor: pointer;
+  height: clamp(360px, 48vw, 470px);
+  outline: none;
 }
 
-.card-content {
+.card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.project-card:hover .card-flip-inner,
+.project-card:focus-visible .card-flip-inner,
+.project-card.is-flipped .card-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.project-card:focus-visible .card-face {
+  border-color: rgba(229, 229, 229, 0.45);
+  box-shadow: 0 0 0 2px rgba(229, 229, 229, 0.2), 0 16px 30px rgba(0, 0, 0, 0.35);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
   background: rgba(229, 229, 229, 0.03);
   border: 1px solid rgba(229, 229, 229, 0.05);
   border-radius: 20px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.project-card:hover .card-content {
+.project-card:hover .card-face {
   border-color: rgba(229, 229, 229, 0.4);
   box-shadow: 0 15px 35px rgba(229, 229, 229, 0.1);
+}
+
+.card-front {
+  transform: rotateY(0deg);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  justify-content: space-between;
+  padding: clamp(18px, 2.8vw, 26px);
+  background: linear-gradient(160deg, rgba(15, 15, 15, 0.98), rgba(24, 24, 24, 0.95));
+}
+
+.card-back-top {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-back-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.73rem;
+  color: var(--accent-cyan);
+  opacity: 0.9;
 }
 
 .card-image-wrapper {
   position: relative;
   width: 100%;
-  height: clamp(190px, 26vw, 250px);
+  height: clamp(200px, 28vw, 255px);
   overflow: hidden;
 }
 
@@ -29,14 +79,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.55s ease;
 }
+
 .project-link {
   color: var(--text-primary);
 }
 
 .project-card:hover .card-image {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .card-overlay {
@@ -45,7 +96,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.3));
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,26 +108,47 @@
   opacity: 1;
 }
 
+.flip-hint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(229, 229, 229, 0.12);
+  border: 1px solid rgba(229, 229, 229, 0.3);
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(4px);
+}
+
 .view-btn {
-  padding: 12px 25px;
+  align-self: flex-start;
+  margin-top: 20px;
+  padding: 12px 22px;
   background-color: var(--accent-purple);
   color: var(--text-primary);
   border-radius: 30px;
   font-weight: 600;
-  transform: translateY(20px);
-  transition: transform 0.3s ease;
-  pointer-events: none;
+  border: 1px solid transparent;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
 }
 
-.project-card:hover .view-btn {
-  transform: translateY(0);
+.view-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  border-color: rgba(229, 229, 229, 0.2);
 }
 
 .card-info {
   padding: clamp(16px, 2.6vw, 25px);
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+}
+
+.card-info-front {
+  flex: 1;
 }
 
 .card-title {
@@ -100,7 +172,7 @@
   gap: 10px;
 }
 
-.tag {
+.project-card .tag {
   font-size: 0.8rem;
   padding: 6px 12px;
   background: rgba(229, 229, 229, 0.05);
@@ -109,13 +181,33 @@
   border: 1px solid rgba(229, 229, 229, 0.2);
 }
 
+@media (hover: none) {
+  .project-card .card-overlay {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.12));
+  }
+
+  .flip-hint {
+    font-size: 0.78rem;
+    padding: 8px 14px;
+  }
+}
+
 @media (max-width: 576px) {
+  .project-card {
+    height: clamp(340px, 95vw, 430px);
+  }
+
+  .card-back {
+    padding: 16px;
+  }
+
   .view-btn {
     padding: 10px 18px;
     font-size: 0.9rem;
   }
 
-  .tag {
+  .project-card .tag {
     font-size: 0.75rem;
     padding: 6px 10px;
   }

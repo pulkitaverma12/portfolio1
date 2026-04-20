@@ -123,7 +123,7 @@
   font-size: 1.3rem;
   letter-spacing: 0.16em;
   color: var(--accent-cyan);
-  text-shadow: 0 0 16px rgba(239, 68, 68, 0.25);
+  text-shadow: 0 0 16px rgba(220, 38, 38, 0.28);
 }
 
 .activity-header-row a {
@@ -135,61 +135,196 @@
 
 .activity-header-row a:hover {
   color: var(--accent-cyan);
-  text-shadow: 0 0 12px rgba(239, 68, 68, 0.35);
+  text-shadow: 0 0 12px rgba(220, 38, 38, 0.34);
 }
 
 .activity-board {
-  display: block;
   border: 1px solid var(--border-metal);
   border-radius: 18px;
-  padding: clamp(12px, 2.2vw, 18px);
+  padding: clamp(14px, 2.8vw, 24px);
   background: linear-gradient(180deg, #0A0A0A 0%, #000000 100%);
-  color: inherit;
-  text-decoration: none;
-}
-
-.activity-heatmap-frame {
-  border: 1px solid var(--border-metal);
-  border-radius: 14px;
-  padding: 10px;
-  background: radial-gradient(circle at 10% 12%, rgba(220, 38, 38, 0.2), rgba(220, 38, 38, 0) 34%),
-    radial-gradient(circle at 88% 88%, rgba(239, 68, 68, 0.16), rgba(239, 68, 68, 0) 36%),
-    linear-gradient(160deg, #0A0A0A, #000000);
-  box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.12);
-  min-height: 170px;
 }
 
 .activity-graph-scroll {
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(239, 68, 68, 0.55) rgba(42, 42, 42, 0.85);
 }
 
-.activity-heatmap-image {
-  display: block;
+.contribution-graph {
+  position: relative;
+  border: 1px solid var(--border-metal);
+  border-radius: 14px;
+  padding: clamp(14px, 2.2vw, 20px);
+  background: radial-gradient(circle at 10% 12%, rgba(220, 38, 38, 0.24), rgba(220, 38, 38, 0) 34%),
+    radial-gradient(circle at 88% 88%, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0) 38%),
+    linear-gradient(160deg, #0A0A0A, #000000);
+  box-shadow: inset 0 0 0 1px rgba(220, 38, 38, 0.16);
+  min-height: clamp(210px, 22vw, 285px);
+}
+
+.contribution-table {
   width: 100%;
-  max-width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 5px;
+  min-width: 920px;
+}
+
+.contribution-spacer-cell {
+  width: 44px;
+  min-width: 44px;
+}
+
+.contribution-month-header {
+  position: relative;
+  height: 18px;
+  text-align: left;
+  color: rgba(229, 229, 229, 0.74);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.contribution-month-header span {
+  position: absolute;
+  top: -1px;
+  left: 2px;
+}
+
+.contribution-day-label-cell {
+  width: 44px;
+  min-width: 44px;
+  position: relative;
+}
+
+.contribution-day-label {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  font-size: 0.78rem;
+  color: rgba(229, 229, 229, 0.68);
+}
+
+.contribution-cell {
+  width: auto;
   height: auto;
-  border-radius: 10px;
+  padding: 0;
+}
+
+.contribution-cell-square {
+  width: clamp(11px, 1.4vw, 18px);
+  height: clamp(11px, 1.4vw, 18px);
+  margin: 0 auto;
+  border-radius: 3px;
+  border: 1px solid rgba(229, 229, 229, 0.08);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contribution-cell-square.empty {
   opacity: 0;
-  transition: opacity 0.25s ease;
 }
 
-.activity-heatmap-image.is-ready {
-  opacity: 1;
+.contribution-cell:hover .contribution-cell-square {
+  transform: scale(1.1);
+  border-color: rgba(239, 68, 68, 0.45);
+  box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.4);
 }
 
-.activity-heatmap-fallback {
-  display: block;
-  width: 100%;
-  height: auto;
+.contribution-cell-square.level-0 {
+  background: #1a1a1a;
+}
+
+.contribution-cell-square.level-1 {
+  background: rgba(220, 38, 38, 0.28);
+}
+
+.contribution-cell-square.level-2 {
+  background: rgba(220, 38, 38, 0.48);
+}
+
+.contribution-cell-square.level-3 {
+  background: rgba(239, 68, 68, 0.72);
+}
+
+.contribution-cell-square.level-4 {
+  background: var(--accent-purple);
+}
+
+.contribution-tooltip {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
   border-radius: 10px;
+  border: 1px solid rgba(220, 38, 38, 0.45);
+  background: rgba(0, 0, 0, 0.96);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(220, 38, 38, 0.2);
+  padding: 8px 10px;
+  font-size: 0.78rem;
+  max-width: 230px;
 }
 
-.activity-legend {
+.tooltip-title {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.tooltip-date {
+  margin-top: 2px;
+  color: rgba(229, 229, 229, 0.75);
+}
+
+.contribution-legend-row {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  color: rgba(229, 229, 229, 0.72);
+  font-size: 0.76rem;
+}
+
+.contribution-legend-scale {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.activity-status {
   margin-top: 10px;
-  color: #fca5a5;
-  font-size: 0.82rem;
-  letter-spacing: 0.02em;
+  color: rgba(239, 68, 68, 0.86);
+  font-size: 0.8rem;
+}
+
+.activity-graph-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.activity-graph-scroll::-webkit-scrollbar-track {
+  background: rgba(42, 42, 42, 0.8);
+  border-radius: 999px;
+}
+
+.activity-graph-scroll::-webkit-scrollbar-thumb {
+  background: rgba(239, 68, 68, 0.58);
+  border-radius: 999px;
+}
+
+.activity-graph-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(239, 68, 68, 0.74);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 @keyframes skillsFadeUp {
@@ -258,21 +393,36 @@
     font-size: 0.88rem;
   }
 
-  .activity-heatmap-frame {
-    min-height: 140px;
-    padding: 8px;
-  }
-
   .activity-graph-scroll {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
   }
 
-  .activity-heatmap-image,
-  .activity-heatmap-fallback {
-    width: max(100%, 640px);
-    max-width: none;
+  .contribution-table {
+    min-width: 760px;
+    border-spacing: 4px;
+  }
+
+  .contribution-spacer-cell,
+  .contribution-day-label-cell {
+    width: 34px;
+    min-width: 34px;
+  }
+
+  .contribution-day-label {
+    font-size: 0.7rem;
+  }
+
+  .contribution-month-header {
+    font-size: 0.68rem;
+  }
+
+  .contribution-cell-square {
+    width: clamp(10px, 1.8vw, 13px);
+    height: clamp(10px, 1.8vw, 13px);
+  }
+
+  .contribution-tooltip {
+    display: none;
   }
 
 }
@@ -288,8 +438,12 @@
     font-size: 0.82rem;
   }
 
-  .activity-heatmap-image,
-  .activity-heatmap-fallback {
-    width: max(100%, 560px);
+  .contribution-table {
+    min-width: 640px;
+    border-spacing: 3px;
+  }
+
+  .contribution-legend-row {
+    justify-content: flex-start;
   }
 }
