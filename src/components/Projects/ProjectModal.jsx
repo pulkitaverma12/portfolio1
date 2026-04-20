@@ -9,6 +9,9 @@ const ProjectModal = ({ project, onClose }) => {
 
   if (!project) return null;
 
+  const useContainGallery = project.galleryFit === 'contain';
+  const galleryPosition = project.galleryPosition || 'center center';
+
   return (
     <AnimatePresence>
       <motion.div 
@@ -36,7 +39,8 @@ const ProjectModal = ({ project, onClose }) => {
                 key={activeImg}
                 src={project.gallery[activeImg]} 
                 alt={`${project.title} screenshot`} 
-                className="main-img"
+                className={`main-img ${useContainGallery ? 'fit-contain' : ''}`}
+                style={{ objectPosition: galleryPosition }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
@@ -47,7 +51,8 @@ const ProjectModal = ({ project, onClose }) => {
                     key={idx}
                     src={img}
                     alt={`thumb ${idx}`}
-                    className={`thumbnail hover-target ${activeImg === idx ? 'active' : ''}`}
+                    className={`thumbnail hover-target ${activeImg === idx ? 'active' : ''} ${useContainGallery ? 'fit-contain' : ''}`}
+                    style={{ objectPosition: galleryPosition }}
                     onClick={() => setActiveImg(idx)}
                   />
                 ))}

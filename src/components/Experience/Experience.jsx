@@ -5,6 +5,18 @@ import './Experience.css';
 const experiences = [
   {
     id: 1,
+    company: "COE Team, College Government Projects Cell",
+    role: "COE Member - Full Stack Development",
+    duration: "Mar 2024 – Present",
+    achievements: [
+      "Built Medi Guru (Virtual Medical Training Platform) using React, PHP, and MySQL for managing virtual training programs for Government doctors under CMHO Raipur.",
+      "Developed Smriti Pustakalaya, a digital library donation platform for Government of Chhattisgarh to enable seamless donation and access of e-books and study materials.",
+      "Built Chhanv (Health Camp and Welfare Scheme Portal) using React, MySQL, and PHP to manage camps, doctor assignments, and welfare schemes.",
+      "Implemented role-based access, real-time analytics, health tracking modules, and scheme verification workflows across the platforms."
+    ]
+  },
+  {
+    id: 2,
     company: "Skyvo Technologies Pvt Ltd",
     role: "Web Development Trainee",
     duration: "Jul 2025 – Aug 2025",
@@ -15,7 +27,7 @@ const experiences = [
     ]
   },
   {
-    id: 2,
+    id: 3,
     company: "Cognifyz Technologies",
     role: "Software Development Intern",
     duration: "Mar 2025 – Apr 2025",

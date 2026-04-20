@@ -4,6 +4,8 @@ import './ProjectCard.css';
 
 const ProjectCard = ({ project, onClick }) => {
   const [isFlipped, setIsFlipped] = useState(false);
+  const shouldContainImage = project.imageFit === 'contain';
+  const imagePosition = project.imagePosition || 'center center';
 
   const toggleCard = () => {
     setIsFlipped((prev) => !prev);
@@ -45,8 +47,13 @@ const ProjectCard = ({ project, onClick }) => {
     >
       <div className="card-flip-inner">
         <div className="card-face card-front">
-          <div className="card-image-wrapper">
-            <img src={project.image} alt={project.title} className="card-image" />
+          <div className={`card-image-wrapper ${shouldContainImage ? 'is-contain' : ''}`}>
+            <img
+              src={project.image}
+              alt={project.title}
+              className={`card-image ${shouldContainImage ? 'fit-contain' : ''}`}
+              style={{ objectPosition: imagePosition }}
+            />
             <div className="card-overlay">
               <span className="flip-hint">Hover or tap to flip</span>
             </div>

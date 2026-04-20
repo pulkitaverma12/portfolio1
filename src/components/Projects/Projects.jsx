@@ -12,6 +12,8 @@ const projects = [
     longDescription: "Built a full-featured health operations platform with separate Admin and Doctor portals, secure login flow, camp scheduling, patient records, and analytics dashboards. The app includes reports with chart visualizations, activity tracking, and responsive Hindi-first screens for field and office users.",
     tags: ["React", "TypeScript", "Tailwind CSS", "Vite", "React Router", "Recharts"],
     image: "/projects/chhanv_logo.svg",
+    imageFit: "contain",
+    galleryFit: "contain",
     gallery: [
       "/projects/chhanv_logo.svg"
     ],
@@ -67,6 +69,8 @@ const projects = [
     longDescription: "Built a full-stack web platform for virtual physician training using React + TypeScript on the frontend and PHP + MySQL APIs on the backend. The system supports role-based authentication, meeting creation, attendance and test data uploads, statistics dashboards, and export/report workflows for CMHO-level monitoring.",
     tags: ["React", "TypeScript", "Vite", "PHP", "MySQL", "JWT", "XLSX"],
     image: "/projects/mediguru/medigurulogo.png",
+    imageFit: "contain",
+    galleryFit: "contain",
     gallery: [
       "/projects/mediguru/medigurulogo.png",
       // "/projects/mediguru/medigurulogo.svg",
@@ -75,8 +79,26 @@ const projects = [
     ],
     demoUrl: "https://mediguru.ssipmt.in/",
   },
+  {
+    id: 6,
+    title: "Bluetooth Controlled Obstacle Avoiding Robot",
+    description: "Bluetooth-controlled Arduino robot with real-time obstacle detection and automatic collision prevention.",
+    longDescription: "Developed a Bluetooth-controlled robotic vehicle using Arduino and the HC-05 module for wireless movement control from a mobile app. Integrated an ultrasonic sensor for continuous obstacle detection so the robot can stop immediately before collision, even when manual movement commands are active. Implemented real-time serial command handling with Serial.read(), switch-case based movement flow for commands like F and B, and dedicated motor control functions forward(), back(), and Stop() using an L293D/AFMotor-based setup.",
+    tags: ["Arduino", "HC-05 Bluetooth", "Embedded C", "L293D", "AFMotor", "Ultrasonic Sensor"],
+    image: "/projects/bluetooth-controller/robot-1.jpeg",
+    imageFit: "contain",
+    galleryFit: "contain",
+    imagePosition: "center center",
+    galleryPosition: "center center",
+    gallery: [
+      "/projects/bluetooth-controller/robot-1.jpeg",
+      "/projects/bluetooth-controller/robot-2.jpeg",
+      "/projects/bluetooth-controller/robot-3.jpeg"
+    ],
+    demoUrl: "#",
+  },
   // {
-  //   id: 6,
+  //   id: 7,
   //   title: "Blog CMS",
   //   description: "Headless content management system optimized for SEO and speed.",
   //   longDescription: "A custom headless CMS built for speed and SEO. Features MDX support, scheduled publishing, and a custom PostgreSQL backend to handle high traffic read operations efficiently.",

@@ -73,6 +73,11 @@
   width: 100%;
   height: clamp(200px, 28vw, 255px);
   overflow: hidden;
+  background: linear-gradient(160deg, rgba(12, 12, 12, 0.96), rgba(20, 20, 20, 0.92));
+}
+
+.card-image-wrapper.is-contain {
+  background: radial-gradient(circle at 50% 20%, rgba(229, 229, 229, 0.12), rgba(10, 10, 10, 0.95) 70%);
 }
 
 .card-image {
@@ -82,12 +87,21 @@
   transition: transform 0.55s ease;
 }
 
+.card-image.fit-contain {
+  object-fit: contain;
+  padding: clamp(8px, 1.4vw, 12px);
+}
+
 .project-link {
   color: var(--text-primary);
 }
 
 .project-card:hover .card-image {
   transform: scale(1.08);
+}
+
+.project-card:hover .card-image.fit-contain {
+  transform: scale(1);
 }
 
 .card-overlay {
